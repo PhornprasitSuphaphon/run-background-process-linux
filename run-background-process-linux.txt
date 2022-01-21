@@ -1,0 +1,36 @@
+step (1) 
+	cd /etc/systemd/system
+
+step (2)
+	สร้างชื่อไฟล์.service ขึ้นมา
+	ใช้คำสั่ง :touch (ชื่อไฟล์ที่ต้องการตั้ง).service
+
+step (3)
+	copy ข้อความไปยังไฟล์ที่สร้างใน step(2)
+
+	[Unit]
+	Description=smart_pole
+	After=network.target
+
+	[Service]
+	User=root
+	PermissionsStartOnly=true
+	ExecStart=/usr/bin/python /root/touch-smartpole/app.py
+	Restart=always
+	RuntimeDirectoryMode=755
+
+	[Install]
+	WantedBy=multi-user.target
+
+step (4)
+ใช้คำสั่ง  systemctl enable (ชื่อ service) เพื่อเปิดใช้งาน service
+ใช้คำสั่ง  systemctl start (ชื่อ service)  เพื่อrun service
+
+
+คำสั่งอื่นๆ
+systemctl  stop (ชื่อ service)
+systemctl  restart (ชื่อ service)
+systemctl  status (ชื่อ service)
+
+
+ps aux |grep app.py ใช้เมื่อต้องการรู้ว่า service นั้นrunไปตอนไหน
